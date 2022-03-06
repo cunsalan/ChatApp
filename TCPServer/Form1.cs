@@ -19,11 +19,13 @@ namespace TCPServer
         }
         Dictionary<int, string> connectedPairs;
         SimpleTcpServer server;
+        int connectedCount;
 
         private void Form1_Load(object sender, EventArgs e)
         {
             btnSend.Enabled = false;
             server = new SimpleTcpServer(txtIP.Text);
+            connectedCount = 0;
             server.Events.ClientConnected += Events_ClientConnected;
             server.Events.ClientDisconnected += Events_ClientDisconnected;
             server.Events.DataReceived += Events_DataReceived;
@@ -73,7 +75,7 @@ namespace TCPServer
                         }
                         else
                         {
-                            server.Send(e.IpPort, "There Is No one For You Loser!");
+                            server.Send(e.IpPort, "There Is No One For You Loser!");
                         }
                     }
                 }
@@ -102,7 +104,7 @@ namespace TCPServer
             {
                 txtInfo.Text += $"{e.IpPort} connected {Environment.NewLine}";
                 lstClientIP.Items.Add(e.IpPort);
-                connectedPairs.Add(connectedPairs.Count + 1, e.IpPort);
+                connectedPairs.Add(connectedCount + 1, e.IpPort);
             });
            
         }
